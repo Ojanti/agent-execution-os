@@ -25,6 +25,7 @@ The Director is the strategic coordinator.
 - milestone sequencing
 - major tradeoff decisions
 - section launch approval
+- exact Supervisor launch prompts
 - final quality gates
 - user-facing decision requests
 
@@ -51,11 +52,49 @@ The Director is the strategic coordinator.
 ### Director outputs
 
 - section launch decisions
+- exact copy-paste Supervisor launch prompts
 - milestone status
 - user decision requests
 - roadmap updates
 - escalation decisions
 - final acceptance or rejection
+
+### Director-to-Supervisor handoff rule
+
+When the Director decides that a new Supervisor session should start, the Director must provide an exact copy-paste prompt for the user to place into the Supervisor session.
+
+The Supervisor launch prompt must include:
+
+- Supervisor role
+- section name
+- phase name, if relevant
+- required files to read
+- what not to do
+- what to do first
+- how to handle user inputs
+- how to report back to the Director
+
+The user should not have to invent Supervisor instructions manually.
+
+Example:
+
+```text
+You are the Supervisor for Section 1: Foundation, Environments, Auth & Security.
+
+Read:
+1. /docs/agent/02_SUPERVISOR_OPERATING_MANUAL.md
+2. /docs/agent/04_QUALITY_BAR.md
+3. /docs/agent/05_SECURITY_GUARDRAILS.md
+4. /docs/agent/12_RISK_CLASS_AND_ROUTING.md
+5. /docs/agent/13_VERIFICATION_GATE_PROTOCOL.md
+6. /docs/agent/sections/01_foundation/SECTION_BRIEF.md
+7. /docs/agent/sections/01_foundation/PHASES.md
+8. /docs/agent/status/*
+
+Do not implement code yourself. Coordinate Section 1 only. Start by checking the first phase preflight requirements. If anything is needed from the user, explain exactly what is needed, why, how to get it, where to provide it, any safety warning, and what happens next.
+
+When a phase completes or blocks, produce a Director-ready summary.
+```
 
 ## Actor 2: Supervisor
 
@@ -108,6 +147,23 @@ A section may contain many phases, and each phase may contain many tasks. The Su
 - fix-task launches
 - phase completion reports
 - section completion reports
+- Director-ready milestone summaries
+
+### Supervisor-to-Director handoff rule
+
+The Supervisor handles task-level noise. It should not forward every worker report to the Director.
+
+The Supervisor reports to the Director when:
+
+- a phase starts
+- a phase is blocked
+- a phase completes
+- a phase verification gate fails
+- a section completes
+- a major product/architecture/security decision is needed
+- R2/high-risk work reveals a serious issue
+
+The report must be concise, but it must include current status, evidence, blockers, risks, and recommended next action.
 
 ## Actor 3: Subagent / Worker
 
