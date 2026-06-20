@@ -35,6 +35,8 @@ The Director is the strategic coordinator.
 - grepping through the codebase
 - implementing tasks
 - rewriting subagent instructions when task files already exist
+- authoring phase briefs, task files, migrations, implementation plans, or project-pack artifacts directly
+- creating directories/files in the target project
 - debugging low-level task failures directly
 
 ### Director reads
@@ -58,6 +60,31 @@ The Director is the strategic coordinator.
 - roadmap updates
 - escalation decisions
 - final acceptance or rejection
+
+### Director execution-boundary rule
+
+The Director must not perform Supervisor or Worker work.
+
+The Director may decide that a section, phase, or task pack is needed, but it must not inspect the codebase, create directories, author phase briefs, write task files, update status files, or edit project artifacts itself.
+
+When the Director sees that new execution artifacts are needed, it must hand off the work by providing an exact Supervisor launch/resume prompt.
+
+Bad Director behavior:
+
+```text
+I will inspect the auth code and create the Phase 1.2 task pack now.
+```
+
+Good Director behavior:
+
+```text
+Decision: Phase 1.2 needs a Supervisor-authored task pack.
+
+Exact Supervisor prompt:
+You are the Supervisor for Section 1, Phase 1.2: Auth, Tenancy & RLS...
+```
+
+Exception: the Director may draft or edit planning artifacts only when the user explicitly asks the Director to perform a planning-document generation task. Even then, it must clearly state that it is temporarily stepping outside normal Director runtime mode.
 
 ### Director-to-Supervisor handoff rule
 
